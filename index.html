@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Complexity Analyzer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Code Complexity Analyzer</h1>
+        <p>Upload or paste your source code (Python, JavaScript, or C++) to analyze complexity metrics.</p>
+        
+        <div class="input-section">
+            <label for="language-select">Select Language:</label>
+            <select id="language-select">
+                <option value="python">Python</option>
+                <option value="javascript">JavaScript</option>
+                <option value="cpp">C++</option>
+            </select>
+            
+            <label for="code-input">Paste Code:</label>
+            <textarea id="code-input" placeholder="Paste your code here..."></textarea>
+            
+            <label for="file-input">Or Upload File:</label>
+            <input type="file" id="file-input" accept=".py,.js,.cpp,.h,.hpp">
+            
+            <button id="analyze-btn">Analyze Code</button>
+        </div>
+        
+        <div class="output-section" id="output-section" style="display: none;">
+            <h2>Analysis Results</h2>
+            
+            <div class="format-toggle">
+                <button id="human-readable-btn" class="active">Human-Readable</button>
+                <button id="json-btn">JSON</button>
+            </div>
+            
+            <div id="results-display"></div>
+            
+            <div class="export-section">
+                <button id="export-md-btn">Export as Markdown</button>
+                <button id="export-csv-btn">Export as CSV</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
