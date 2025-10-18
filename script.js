@@ -38,22 +38,30 @@ function calculateCyclomaticComplexity(code, language) {
 function calculateNestingDepth(code, language) {
     let maxDepth = 0;
     let currentDepth = 0;
-    
-    const indentChars = language === 'python' ? '    ' : language === 'cpp' ? '{' : '{';
+
     const lines = code.split('\n');
-    
+
     for (const line of lines) {
         const trimmedLine = line.trim();
         if (language === 'python') {
             const indentLevel = line.length - line.trimStart().length;
             currentDepth = Math.floor(indentLevel / 4);
-        } else {
+        } else if (['javascript', 'csharp', 'c', 'cpp', 'java', 'php', 'swift', 'kotlin'].includes(language)) {
             if (trimmedLine.includes('{')) currentDepth++;
             if (trimmedLine.includes('}')) currentDepth--;
+        } else if (language === 'go') {
+            if (trimmedLine.includes('{')) currentDepth++;
+            if (trimmedLine.includes('}')) currentDepth--;
+        } else if (language === 'lua') {
+            if (trimmedLine.includes('do') || trimmedLine.includes('then') || trimmedLine.includes('function')) currentDepth++;
+            if (trimmedLine.includes('end')) currentDepth--;
+        } else if (language === 'ruby') {
+            if (trimmedLine.includes('do') || trimmedLine.includes('begin') || trimmedLine.includes('def') || trimmedLine.includes('class') || trimmedLine.includes('module')) currentDepth++;
+            if (trimmedLine.includes('end')) currentDepth--;
         }
         maxDepth = Math.max(maxDepth, currentDepth);
     }
-    
+
     return maxDepth;
 }
 
@@ -62,13 +70,22 @@ function calculateModularityScore(code, language) {
     const functionKeywords = {
         python: ['def '],
         javascript: ['function ', 'const ', 'let ', 'var '],
-        cpp: ['void ', 'int ', 'float ', 'double ', 'char ', 'bool ']
+        cpp: ['void ', 'int ', 'float ', 'double ', 'char ', 'bool '],
+        csharp: ['public ', 'private ', 'protected ', 'void ', 'int ', 'float ', 'double ', 'string ', 'bool '],
+        c: ['void ', 'int ', 'float ', 'double ', 'char '],
+        go: ['func '],
+        lua: ['function ', 'local function '],
+        php: ['function ', 'public function ', 'private function ', 'protected function '],
+        ruby: ['def '],
+        java: ['public ', 'private ', 'protected ', 'void ', 'int ', 'float ', 'double ', 'String ', 'boolean '],
+        swift: ['func ', 'var ', 'let '],
+        kotlin: ['fun ', 'val ', 'var ']
     };
-    
+
     const keywords = functionKeywords[language] || [];
     let functionCount = 0;
     const lines = code.split('\n');
-    
+
     for (const line of lines) {
         const trimmedLine = line.trim();
         for (const keyword of keywords) {
@@ -78,7 +95,7 @@ function calculateModularityScore(code, language) {
             }
         }
     }
-    
+
     // Modularity score: higher is better (more functions relative to code size)
     const totalLines = lines.length;
     return totalLines > 0 ? (functionCount / totalLines * 100).toFixed(2) : 0;
