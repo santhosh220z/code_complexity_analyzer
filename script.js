@@ -2,17 +2,26 @@
 function calculateCyclomaticComplexity(code, language) {
     // Simplified cyclomatic complexity calculation
     let complexity = 1; // Base complexity
-    
+
     // Count control flow keywords
     const controlFlowKeywords = {
         python: ['if', 'elif', 'for', 'while', 'try', 'except', 'with'],
         javascript: ['if', 'else if', 'for', 'while', 'do', 'switch', 'case', 'try', 'catch'],
-        cpp: ['if', 'else if', 'for', 'while', 'do', 'switch', 'case', 'try', 'catch']
+        cpp: ['if', 'else if', 'for', 'while', 'do', 'switch', 'case', 'try', 'catch'],
+        csharp: ['if', 'else if', 'for', 'foreach', 'while', 'do', 'switch', 'case', 'try', 'catch', 'when'],
+        c: ['if', 'else if', 'for', 'while', 'do', 'switch', 'case'],
+        go: ['if', 'else if', 'for', 'switch', 'case', 'select', 'default'],
+        lua: ['if', 'elseif', 'for', 'while', 'repeat', 'until'],
+        php: ['if', 'elseif', 'else if', 'for', 'foreach', 'while', 'do', 'switch', 'case', 'try', 'catch'],
+        ruby: ['if', 'elsif', 'unless', 'for', 'while', 'until', 'case', 'when', 'begin', 'rescue'],
+        java: ['if', 'else if', 'for', 'while', 'do', 'switch', 'case', 'try', 'catch'],
+        swift: ['if', 'else if', 'for', 'while', 'repeat', 'switch', 'case', 'do', 'catch'],
+        kotlin: ['if', 'else if', 'for', 'while', 'do', 'when', 'try', 'catch']
     };
-    
+
     const keywords = controlFlowKeywords[language] || [];
     const lines = code.split('\n');
-    
+
     for (const line of lines) {
         const trimmedLine = line.trim();
         for (const keyword of keywords) {
@@ -22,7 +31,7 @@ function calculateCyclomaticComplexity(code, language) {
             }
         }
     }
-    
+
     return complexity;
 }
 
