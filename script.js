@@ -1,7 +1,7 @@
 // Complexity analysis functions
 function calculateCyclomaticComplexity(code, language) {
     // Simplified cyclomatic complexity calculation
-    let complexity = 1; // Base complexity
+   let complexity = 1; // Base complexity
 
     // Count control flow keywords
     const controlFlowKeywords = {
